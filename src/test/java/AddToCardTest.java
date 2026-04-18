@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 @Test
 public class AddToCardTest {
-
     private final By usernameFieldLocator = By.id("user-name");
     private final By passwordFieldLocator = By.id("password");
     private final By loginButtonLocator = By.id("login-button");
@@ -55,8 +54,8 @@ public class AddToCardTest {
         String cartItemName = cartItemContainer.findElement(cartItemNameLocator).getText();
         String cartItemPrice = cartItemContainer.findElement(cartItemPriceLocator).getText();
 
-        Assert.assertEquals(cartItemName,itemName);
-        Assert.assertEquals(cartItemPrice,itemPrice);
+        Assert.assertEquals(cartItemName, itemName);
+        Assert.assertEquals(cartItemPrice, itemPrice);
 
         driver.quit();
     }
