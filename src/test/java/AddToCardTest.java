@@ -5,10 +5,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
 
-@Test
 public class AddToCardTest {
     private final By usernameFieldLocator = By.id("user-name");
     private final By passwordFieldLocator = By.id("password");
@@ -17,7 +17,8 @@ public class AddToCardTest {
     private final String login = "standard_user";
     private final String password = "secret_sauce";
 
-    public void AddToCart() {
+    @Test
+    public void addToCart() {
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("credentials_enable_service", false);
@@ -29,6 +30,7 @@ public class AddToCardTest {
         options.addArguments("--disable-infobars");
         WebDriver driver = new ChromeDriver(options);
         driver.get("https://www.saucedemo.com/");
+        SoftAssert softAssert = new SoftAssert();
 
         driver.findElement(usernameFieldLocator).sendKeys(login);
         driver.findElement(passwordFieldLocator).sendKeys(password);
@@ -54,9 +56,10 @@ public class AddToCardTest {
         String cartItemName = cartItemContainer.findElement(cartItemNameLocator).getText();
         String cartItemPrice = cartItemContainer.findElement(cartItemPriceLocator).getText();
 
-        Assert.assertEquals(cartItemName, itemName);
+        softAssert.assertEquals(cartItemName, itemName);
         Assert.assertEquals(cartItemPrice, itemPrice);
 
         driver.quit();
+        softAssert.assertAll();
     }
 }
