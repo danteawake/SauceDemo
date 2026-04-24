@@ -1,36 +1,14 @@
+package tests;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-
-public class LocatorTest {
-    private final By usernameFieldLocator = By.id("user-name");
-    private final By passwordFieldLocator = By.id("password");
-    private final By loginButtonLocator = By.id("login-button");
-
-    private final String login = "standard_user";
-    private final String password = "secret_sauce";
+public class LocatorTest extends BaseTest {
 
     @Test
     public void checkLocator() {
-        ChromeOptions options = new ChromeOptions();
-        HashMap<String, Object> chromePrefs = new HashMap<>();
-        chromePrefs.put("credentials_enable_service", false);
-        chromePrefs.put("profile.password_manager_enabled", false);
-        options.setExperimentalOption("prefs", chromePrefs);
-        options.addArguments("--incognito");
-        options.addArguments("--disable_notifications");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--disable-infobars");
-        WebDriver driver = new ChromeDriver(options);
-        driver.get("https://www.saucedemo.com/");
-
-        driver.findElement(usernameFieldLocator).sendKeys(login);
-        driver.findElement(passwordFieldLocator).sendKeys(password);
-        driver.findElement(loginButtonLocator).click();
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
 
         //Практика
         // id
@@ -76,7 +54,5 @@ public class LocatorTest {
         By cssAttributeCaret = By.cssSelector("button[id^='add-to-cart']");
         By cssAttributeDollar = By.cssSelector("button[id$='backpack']");
         By cssAttributeAsterisk = By.cssSelector("button[id*='add-to-cart']");
-
-        driver.quit();
     }
 }
