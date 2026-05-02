@@ -10,7 +10,9 @@ import static org.testng.AssertJUnit.assertFalse;
 
 public class RemoveFromCartTest extends BaseTest {
 
-    @Test(groups = {"regression"}, description = "Удаление одного из нескольких товаров со страницы каталога")
+    @Test(groups = {"regression"},
+            testName = "Удаление одного из нескольких товаров со страницы каталога",
+            description = "Удаление одного из нескольких товаров со страницы каталога")
     public void removeItemOfManyFromProductPage(@Optional("3") int itemIndex) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -36,7 +38,9 @@ public class RemoveFromCartTest extends BaseTest {
                 cartPage.getAllItemsNames().contains(removedItemName));
     }
 
-    @Test(groups = {"regression"}, description = "Удаление одного из нескольких товаров прямо в корзине")
+    @Test(groups = {"regression"},
+            testName = "Удаление одного из нескольких товаров прямо в корзине",
+            description = "Удаление одного из нескольких товаров прямо в корзине")
     public void removeItemOfManyFromCart(@Optional("3") int itemIndex) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -55,7 +59,9 @@ public class RemoveFromCartTest extends BaseTest {
                 cartPage.getAllItemsNames().contains(removedItemName));
     }
 
-    @Test(groups = {"smoke", "regression"}, description = "Добавление и удаление товара из корзины")
+    @Test(groups = {"smoke", "regression"},
+            testName = "Добавление и удаление товара из корзины",
+            description = "Добавление и удаление товара из корзины")
     public void removeItemLast(@Optional("3") int itemIndex) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
