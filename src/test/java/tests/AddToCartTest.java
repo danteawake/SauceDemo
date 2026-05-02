@@ -9,7 +9,10 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class AddToCartTest extends BaseTest {
 
-    @Test
+    @Test(groups = {"smoke", "regression"},
+            testName = "Добавление одного товара в корзину",
+            description = "Добавление одного товара в корзину",
+            priority = 2)
     public void addToCartOne(@Optional("3") int itemIndex) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -24,7 +27,10 @@ public class AddToCartTest extends BaseTest {
         assertEquals(cartPage.getItemPriceByName(itemName), itemPrice);
     }
 
-    @Test
+    @Test(groups = {"regression"},
+            testName = "Добавление всех доступных товаров в корзину",
+            description = "Добавление всех доступных товаров в корзину",
+            priority = 1)
     public void addToCartMax() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
