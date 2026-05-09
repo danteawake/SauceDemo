@@ -30,6 +30,7 @@ public class ProductsPage extends BasePage {
     public String getTitle() {
         return driver.findElement(TITLE).getText();
     }
+
     //ITEM NAME------------------------------------------------------
     public String getItemNameByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
@@ -48,6 +49,7 @@ public class ProductsPage extends BasePage {
         }
         return itemNames;
     }
+
     //ITEM PRICE------------------------------------------------------
     public String getItemPriceByName(String itemName) {
         List<WebElement> items = driver.findElements(ITEMS);
@@ -68,6 +70,7 @@ public class ProductsPage extends BasePage {
         }
         return items.get(itemNumber).findElement(ITEM_PRICE).getText();
     }
+
     //ITEM DESC------------------------------------------------------
     public String getItemDescByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
@@ -88,6 +91,7 @@ public class ProductsPage extends BasePage {
         }
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
     }
+
     //ADD TO CART------------------------------------------------------
     public void addToCartByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
@@ -116,6 +120,7 @@ public class ProductsPage extends BasePage {
             item.findElement(ADD_TO_CART_BUTTON).click();
         }
     }
+
     //REMOVE FROM CART------------------------------------------------------
     public void removeFromCartByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
@@ -137,6 +142,7 @@ public class ProductsPage extends BasePage {
         }
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
     }
+
     public String getButtonText(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
