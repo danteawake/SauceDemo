@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -13,6 +14,15 @@ public class AddToCartTest extends BaseTest {
             testName = "Добавление одного товара в корзину",
             description = "Добавление одного товара в корзину",
             priority = 2)
+    @Description("Добавление одного товара в корзину")
+    @Epic("SauceDemo")
+    @Feature("Login")
+    @Story("Cart")
+    @Severity(SeverityLevel.CRITICAL)
+    @Link("Confluence")
+    @TmsLink("Jira")
+    @Issue("Jira")
+    @Owner("Egorov.OI")
     public void addToCartOne(@Optional("3") int itemIndex) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -31,6 +41,15 @@ public class AddToCartTest extends BaseTest {
             testName = "Добавление всех доступных товаров в корзину",
             description = "Добавление всех доступных товаров в корзину",
             priority = 1)
+    @Description("Добавление всех доступных товаров в корзину")
+    @Epic("SauceDemo")
+    @Feature("Login")
+    @Story("Cart")
+    @Severity(SeverityLevel.NORMAL)
+    @Link("Confluence")
+    @TmsLink("Jira")
+    @Issue("Jira")
+    @Owner("Egorov.OI")
     public void addToCartMax() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
