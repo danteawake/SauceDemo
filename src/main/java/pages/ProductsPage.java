@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,15 +24,18 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Открытие страницы каталога товаров")
     public void open() {
         driver.get(MAIN_URL + "/inventory.html");
     }
 
+    @Step("Получение названия страницы")
     public String getTitle() {
         return driver.findElement(TITLE).getText();
     }
 
     //ITEM NAME------------------------------------------------------
+    @Step("Получение названия товара по его порядковому номеру '{itemNumber}'")
     public String getItemNameByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
@@ -41,6 +45,7 @@ public class ProductsPage extends BasePage {
         return items.get(itemNumber).findElement(ITEM_NAME).getText();
     }
 
+    @Step("Получение названия всех товаров на странице")
     public List<String> allItemNames() {
         List<WebElement> items = driver.findElements(ITEMS);
         List<String> itemNames = new ArrayList<>();
@@ -51,6 +56,7 @@ public class ProductsPage extends BasePage {
     }
 
     //ITEM PRICE------------------------------------------------------
+    @Step("Получение цены товара по названию '{itemName}'")
     public String getItemPriceByName(String itemName) {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement container : items) {
@@ -62,6 +68,7 @@ public class ProductsPage extends BasePage {
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
     }
 
+    @Step("Получение цены товара по его порядковому номеру '{itemNumber}'")
     public String getItemPriceByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
@@ -72,6 +79,7 @@ public class ProductsPage extends BasePage {
     }
 
     //ITEM DESC------------------------------------------------------
+    @Step("Получение описания товара по его порядковому номеру '{itemNumber}'")
     public String getItemDescByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
@@ -81,6 +89,7 @@ public class ProductsPage extends BasePage {
         return items.get(itemNumber).findElement(ITEM_DESC).getText();
     }
 
+    @Step("Получение описания товара по его названию '{itemName}'")
     public String getItemDescByName(String itemName) {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement container : items) {
@@ -93,6 +102,7 @@ public class ProductsPage extends BasePage {
     }
 
     //ADD TO CART------------------------------------------------------
+    @Step("Добавление товара в корзину по его порядковому номеру '{itemNumber}'")
     public void addToCartByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
@@ -102,6 +112,7 @@ public class ProductsPage extends BasePage {
         items.get(itemNumber).findElement(ADD_TO_CART_BUTTON).click();
     }
 
+    @Step("Добавление товара в корзину по его названию '{itemName}'")
     public void addToCartByName(String itemName) {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement container : items) {
@@ -114,6 +125,7 @@ public class ProductsPage extends BasePage {
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
     }
 
+    @Step("Добавление всех товаров на странице в корзину")
     public void addToCartMax() {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement item : items) {
@@ -122,6 +134,7 @@ public class ProductsPage extends BasePage {
     }
 
     //REMOVE FROM CART------------------------------------------------------
+    @Step("Удаление товара из корзины по его порядковому номеру '{itemNumber}'")
     public void removeFromCartByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
@@ -131,6 +144,7 @@ public class ProductsPage extends BasePage {
         items.get(itemNumber).findElement(REMOVE_BUTTON).click();
     }
 
+    @Step("Удаление товара из корзины по его названию '{itemName}'")
     public void removeFromCartByName(String itemName) {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement container : items) {
@@ -143,6 +157,7 @@ public class ProductsPage extends BasePage {
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
     }
 
+    @Step("Получение текста с кнопки 'Add to cart/Remove' по порядковому номеру товара '{itemNumber}'")
     public String getButtonText(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
@@ -152,6 +167,7 @@ public class ProductsPage extends BasePage {
         return items.get(itemNumber).findElement(ANY_BUTTON).getText();
     }
 
+    @Step("Клик по кнопке со значком корзины/переход на страницу корзины")
     public void goToCart() {
         driver.findElement(GO_TO_CART).click();
     }
