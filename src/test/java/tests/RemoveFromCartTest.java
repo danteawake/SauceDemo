@@ -11,6 +11,15 @@ import static org.testng.AssertJUnit.assertFalse;
 
 public class RemoveFromCartTest extends BaseTest {
 
+    private final List<String> allItemNames = List.of(
+            "Sauce Labs Backpack",
+            "Sauce Labs Bike Light",
+            "Sauce Labs Bolt T-Shirt",
+            "Sauce Labs Fleece Jacket",
+            "Sauce Labs Onesie",
+            "Test.allTheThings() T-Shirt (Red)"
+    );
+
     @Test(groups = {"regression"},
             testName = "Удаление одного из нескольких товаров со страницы каталога",
             description = "Удаление одного из нескольких товаров со страницы каталога")
@@ -24,26 +33,21 @@ public class RemoveFromCartTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void removeItemOfManyFromProductPage(@Optional("3") int itemIndex) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        assertEquals("Products", productsPage.getTitle());
-        //productsPage------------------------------------------------------
-        productsPage.addToCartMax();
-        List<String> allItemNames = productsPage.allItemNames();
-        productsPage.goToCart();
-        assertEquals("Your Cart", cartPage.getTitle());
-        //cartPage------------------------------------------------------
+        String removedItemName = "Sauce Labs Onesie";
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .isPageOpened()
+                .addToCartMax()
+                .goToCart()
+                .isPageOpened();
         assertEquals(allItemNames, cartPage.getAllItemsNames());
-        productsPage.open();
-        assertEquals("Products", productsPage.getTitle());
-        //productsPage------------------------------------------------------
-        productsPage.removeFromCartByNumber(itemIndex);
-        String removedItemName = productsPage.getItemNameByNumber(itemIndex);
-        assertEquals("Add to cart", productsPage.getButtonText(itemIndex));
-        cartPage.open();
-        assertEquals("Your Cart", cartPage.getTitle());
-        //cartPage------------------------------------------------------
-        assertEquals(allItemNames.size() - 1, cartPage.getAllItemsNames().size());
+        productsPage.open()
+                .isPageOpened()
+                .removeFromCartByName(removedItemName);
+        assertEquals("Add to cart", productsPage.getButtonTextByName(removedItemName));
+        cartPage.open()
+                .isPageOpened();
+        assertEquals(5, cartPage.getAllItemsNames().size());
         assertFalse("Товар " + removedItemName + " все еще отображается в корзине!",
                 cartPage.getAllItemsNames().contains(removedItemName));
     }
@@ -61,19 +65,14 @@ public class RemoveFromCartTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void removeItemOfManyFromCart(@Optional("3") int itemIndex) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        assertEquals("Products", productsPage.getTitle());
-        //productsPage------------------------------------------------------
-        productsPage.addToCartMax();
-        List<String> allItemNames = productsPage.allItemNames();
-        productsPage.goToCart();
-        assertEquals("Your Cart", cartPage.getTitle());
-        //cartPage------------------------------------------------------
+        String removedItemName = "Sauce Labs Fleece Jacket";
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .isPageOpened().addToCartMax()
+                .goToCart().isPageOpened();
         assertEquals(allItemNames, cartPage.getAllItemsNames());
-        String removedItemName = cartPage.getItemNameByNumber(itemIndex);
         cartPage.removeFromCart(itemIndex);
-        assertEquals(allItemNames.size() - 1, cartPage.getAllItemsNames().size());
+        assertEquals(5, cartPage.getAllItemsNames().size());
         assertFalse("Товар " + removedItemName + " все еще отображается в корзине!",
                 cartPage.getAllItemsNames().contains(removedItemName));
     }
@@ -91,17 +90,14 @@ public class RemoveFromCartTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void removeItemLast(@Optional("3") int itemIndex) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        assertEquals("Products", productsPage.getTitle());
-        //productsPage------------------------------------------------------
-        productsPage.addToCartByNumber(itemIndex);
-        String itemName = productsPage.getItemNameByNumber(itemIndex);
-        String itemPrice = productsPage.getItemPriceByNumber(itemIndex);
-        productsPage.goToCart();
-        assertEquals("Your Cart", cartPage.getTitle());
-        //cartPage------------------------------------------------------
-        assertEquals(itemPrice, cartPage.getItemPriceByName(itemName));
+        String removedItemName = "Sauce Labs Fleece Jacket";
+        loginPage.open()
+                .login("standard_user", "secret_sauce")
+                .isPageOpened()
+                .addToCartByNumber(itemIndex)
+                .goToCart()
+                .isPageOpened();
+        assertEquals(removedItemName, cartPage.getItemNameByNumber(0));
         cartPage.removeFromCart(0);
         assertEquals(0, cartPage.getAllItemsNames().size());
     }

@@ -21,8 +21,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithPositiveValue() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
         assertEquals("Producs", productsPage.getTitle());
     }
 
@@ -39,8 +40,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithEmptyPassword() {
-        loginPage.open();
-        loginPage.login("standard_user", "");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "");
         assertEquals("Epic sadface: Password is required", loginPage.getErrorMessage());
     }
 
@@ -57,8 +59,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithEmptyUser() {
-        loginPage.open();
-        loginPage.login("", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login("", "secret_sauce");
         assertEquals("Epic sadface: Username is required", loginPage.getErrorMessage());
     }
 
@@ -75,8 +78,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithNegativeValue() {
-        loginPage.open();
-        loginPage.login("test", "test");
+        loginPage.open()
+                .isPageOpened()
+                .login("test", "test");
         assertEquals("Epic sadface: Username and password do not match any user in this service",
                 loginPage.getErrorMessage());
     }
@@ -97,8 +101,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkNegativeLoginDP(String user, String password, String expectedError) {
-        loginPage.open();
-        loginPage.login(user, password);
+        loginPage.open()
+                .isPageOpened()
+                .login(user, password);
         assertEquals(expectedError, loginPage.getErrorMessage());
     }
 

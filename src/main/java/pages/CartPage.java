@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,16 @@ public class CartPage extends BasePage {
         super(driver);
     }
 
+    @Override
+    public CartPage isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CONTINUE_SHOPPING_BUTTON));
+        return this;
+    }
+
     @Step("Открытие страницы корзины")
-    public void open() {
+    public CartPage open() {
         driver.get(MAIN_URL + "/cart.html");
+        return this;
     }
 
     @Step("Получение названия страницы")
@@ -35,6 +43,12 @@ public class CartPage extends BasePage {
     }
 
     //ITEM NAME------------------------------------------------------
+    @Step("Получение названия товара в корзине")
+    public String getItemName() {
+        List<WebElement> items = driver.findElements(CART_ITEM);
+        return items.get(0).findElement(CART_ITEM_NAME).getText();
+    }
+
     @Step("Получение названия товара по его порядковому номеру '{itemNumber}'")
     public String getItemNameByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(CART_ITEM);
@@ -102,12 +116,13 @@ public class CartPage extends BasePage {
     }
 
     @Step("Удаление товара из корзины по его порядковому номеру '{itemNumber}'")
-    public void removeFromCart(int itemNumber) {
+    public CartPage removeFromCart(int itemNumber) {
         List<WebElement> items = driver.findElements(CART_ITEM);
         if (itemNumber < 0 || itemNumber >= items.size()) {
             throw new IllegalArgumentException("Товар под номером " + itemNumber +
                     " не найден. Всего товаров на странице: " + items.size());
         }
         items.get(itemNumber).findElement(REMOVE_BUTTON).click();
+        return new CartPage(driver);
     }
 }
