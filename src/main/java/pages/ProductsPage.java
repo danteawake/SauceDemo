@@ -120,7 +120,7 @@ public class ProductsPage extends BasePage {
                     " не найден. Всего товаров на странице: " + items.size());
         }
         items.get(itemNumber).findElement(ADD_TO_CART_BUTTON).click();
-        return new ProductsPage(driver);
+        return this;
     }
 
     @Step("Добавление товара в корзину по его названию '{itemName}'")
@@ -130,7 +130,7 @@ public class ProductsPage extends BasePage {
             String currentName = container.findElement(ITEM_NAME).getText();
             if (currentName.equals(itemName)) {
                 container.findElement(ADD_TO_CART_BUTTON).click();
-                return new ProductsPage(driver);
+                return this;
             }
         }
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
@@ -142,7 +142,7 @@ public class ProductsPage extends BasePage {
         for (WebElement item : items) {
             item.findElement(ADD_TO_CART_BUTTON).click();
         }
-        return new ProductsPage(driver);
+        return this;
     }
 
     //REMOVE FROM CART------------------------------------------------------

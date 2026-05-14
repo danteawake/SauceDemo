@@ -123,6 +123,6 @@ public class CartPage extends BasePage {
                     " не найден. Всего товаров на странице: " + items.size());
         }
         items.get(itemNumber).findElement(REMOVE_BUTTON).click();
-        return new CartPage(driver);
+        return this;
     }
 }
