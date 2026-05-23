@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 public class CartPage extends BasePage {
 
     private final By CART_ITEM = By.className("cart_item");
@@ -20,6 +22,8 @@ public class CartPage extends BasePage {
     private final By CHECKOUT_BUTTON = By.cssSelector("[data-test=checkout]");
     private final By QUANTITY_LABEL = By.cssSelector("[data-test=cart-quantity-label]");
     private final By CART_DESC_LABEL = By.cssSelector("[data-test=cart-desc-label]");
+    private final String PAGE_URL = "/cart.html";
+
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -27,13 +31,15 @@ public class CartPage extends BasePage {
 
     @Override
     public CartPage isPageOpened() {
+        log.info("Page '{}' opening check", MAIN_URL + PAGE_URL);
         wait.until(ExpectedConditions.visibilityOfElementLocated(CONTINUE_SHOPPING_BUTTON));
         return this;
     }
 
     @Step("Открытие страницы корзины")
     public CartPage open() {
-        driver.get(MAIN_URL + "/cart.html");
+        log.info("Page '{}' opening", MAIN_URL + PAGE_URL);
+        driver.get(MAIN_URL + PAGE_URL);
         return this;
     }
 
@@ -46,7 +52,9 @@ public class CartPage extends BasePage {
     @Step("Получение названия товара в корзине")
     public String getItemName() {
         List<WebElement> items = driver.findElements(CART_ITEM);
-        return items.get(0).findElement(CART_ITEM_NAME).getText();
+        String webElementText = items.get(0).findElement(CART_ITEM_NAME).getText();
+        log.info("Get '{}' webelement text", webElementText);
+        return webElementText;
     }
 
     @Step("Получение названия товара по его порядковому номеру '{itemNumber}'")

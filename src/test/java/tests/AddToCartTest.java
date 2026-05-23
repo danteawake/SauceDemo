@@ -1,6 +1,7 @@
 package tests;
 
 import io.qameta.allure.*;
+import lombok.extern.log4j.Log4j2;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
 
+@Log4j2
 public class AddToCartTest extends BaseTest {
 
     @Test(groups = {"smoke", "regression"},
