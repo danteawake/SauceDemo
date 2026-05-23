@@ -24,7 +24,7 @@ public class LoginTest extends BaseTest {
         loginPage.open()
                 .isPageOpened()
                 .login("standard_user", "secret_sauce");
-        assertEquals("Producs", productsPage.getTitle());
+        assertEquals("Products", productsPage.getTitle());
     }
 
     @Test(groups = {"regression"},
