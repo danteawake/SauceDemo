@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.CartPage;
@@ -33,11 +34,14 @@ public class BaseTest {
         chromePrefs.put("profile.password_manager_enabled", false);
         options.setExperimentalOption("prefs", chromePrefs);
         options.addArguments("--incognito", "--disable_notifications", "--disable-popup-blocking", "--disable-infobars");
+        options.addArguments("--headless");
 
         if (browser.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("firefox")) {
-            driver = new FirefoxDriver();
+            FirefoxOptions options1 = new FirefoxOptions();
+            options1.addArguments("--headless");
+            driver = new FirefoxDriver(options1);
         }
 
         loginPage = new LoginPage(driver);
