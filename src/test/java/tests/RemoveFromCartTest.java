@@ -35,7 +35,7 @@ public class RemoveFromCartTest extends BaseTest {
     public void removeItemOfManyFromProductPage(@Optional("3") int itemIndex) {
         String removedItemName = "Sauce Labs Onesie";
         loginPage.open()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened()
                 .addToCartMax()
                 .goToCart()
@@ -67,7 +67,7 @@ public class RemoveFromCartTest extends BaseTest {
     public void removeItemOfManyFromCart(@Optional("3") int itemIndex) {
         String removedItemName = "Sauce Labs Fleece Jacket";
         loginPage.open()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened().addToCartMax()
                 .goToCart().isPageOpened();
         assertEquals(allItemNames, cartPage.getAllItemsNames());
@@ -92,7 +92,7 @@ public class RemoveFromCartTest extends BaseTest {
     public void removeItemLast(@Optional("3") int itemIndex) {
         String removedItemName = "Sauce Labs Fleece Jacket";
         loginPage.open()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened()
                 .addToCartByNumber(itemIndex)
                 .goToCart()
