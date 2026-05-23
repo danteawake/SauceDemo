@@ -23,7 +23,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithPositiveValue() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce");
+                .login(user, password);
         assertEquals("Products", productsPage.getTitle());
     }
 
@@ -42,7 +42,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithEmptyPassword() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "");
+                .login(user, "");
         assertEquals("Epic sadface: Password is required", loginPage.getErrorMessage());
     }
 
@@ -61,7 +61,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithEmptyUser() {
         loginPage.open()
                 .isPageOpened()
-                .login("", "secret_sauce");
+                .login("", password);
         assertEquals("Epic sadface: Username is required", loginPage.getErrorMessage());
     }
 
@@ -110,8 +110,8 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "negativeRegressLoginData")
     public Object[][] negativeData() {
         return new Object[][]{
-                {"standard_user", "", "Epic sadface: Password is required"},
-                {"", "secret_sauce", "Epic sadface: Username is required"},
+                {user, "", "Epic sadface: Password is required"},
+                {"", password, "Epic sadface: Username is required"},
                 {"test", "test", "Epic sadface: Username and password do not match any user in this service"}
         };
     }

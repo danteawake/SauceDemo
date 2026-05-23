@@ -28,7 +28,7 @@ public class AddToCartTest extends BaseTest {
     public void addToCartOne(@Optional("3") int itemIndex) {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .addToCartByNumber(itemIndex)
                 .goToCart()
                 .isPageOpened();
@@ -59,7 +59,7 @@ public class AddToCartTest extends BaseTest {
         );
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened()
                 .addToCartMax()
                 .goToCart()
