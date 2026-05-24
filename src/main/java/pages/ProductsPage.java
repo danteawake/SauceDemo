@@ -2,8 +2,10 @@ package pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +26,23 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    @Override
+    public ProductsPage isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ITEMS));
+        return this;
+    }
+
     @Step("Открытие страницы каталога товаров")
-    public void open() {
+    public ProductsPage open() {
         driver.get(MAIN_URL + "/inventory.html");
+        return this;
     }
 
     @Step("Получение названия страницы")
     public String getTitle() {
         return driver.findElement(TITLE).getText();
     }
+
 
     //ITEM NAME------------------------------------------------------
     @Step("Получение названия товара по его порядковому номеру '{itemNumber}'")
@@ -103,34 +113,36 @@ public class ProductsPage extends BasePage {
 
     //ADD TO CART------------------------------------------------------
     @Step("Добавление товара в корзину по его порядковому номеру '{itemNumber}'")
-    public void addToCartByNumber(int itemNumber) {
+    public ProductsPage addToCartByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
             throw new IllegalArgumentException("Товар под номером " + itemNumber +
                     " не найден. Всего товаров на странице: " + items.size());
         }
         items.get(itemNumber).findElement(ADD_TO_CART_BUTTON).click();
+        return this;
     }
 
     @Step("Добавление товара в корзину по его названию '{itemName}'")
-    public void addToCartByName(String itemName) {
+    public ProductsPage addToCartByName(String itemName) {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement container : items) {
             String currentName = container.findElement(ITEM_NAME).getText();
             if (currentName.equals(itemName)) {
                 container.findElement(ADD_TO_CART_BUTTON).click();
-                return;
+                return this;
             }
         }
         throw new RuntimeException("Товар '" + itemName + "' не найден в списке товаров!");
     }
 
     @Step("Добавление всех товаров на странице в корзину")
-    public void addToCartMax() {
+    public ProductsPage addToCartMax() {
         List<WebElement> items = driver.findElements(ITEMS);
         for (WebElement item : items) {
             item.findElement(ADD_TO_CART_BUTTON).click();
         }
+        return this;
     }
 
     //REMOVE FROM CART------------------------------------------------------
@@ -158,7 +170,7 @@ public class ProductsPage extends BasePage {
     }
 
     @Step("Получение текста с кнопки 'Add to cart/Remove' по порядковому номеру товара '{itemNumber}'")
-    public String getButtonText(int itemNumber) {
+    public String getButtonTextByNumber(int itemNumber) {
         List<WebElement> items = driver.findElements(ITEMS);
         if (itemNumber < 0 || itemNumber >= items.size()) {
             throw new IllegalArgumentException("Товар под номером " + itemNumber +
@@ -167,8 +179,21 @@ public class ProductsPage extends BasePage {
         return items.get(itemNumber).findElement(ANY_BUTTON).getText();
     }
 
+    @Step("Получение текста с кнопки 'Add to cart/Remove' по его названию '{itemName}'")
+    public String getButtonTextByName(String itemName) {
+        List<WebElement> items = driver.findElements(ITEMS);
+        for (WebElement container : items) {
+            String currentName = container.findElement(ITEM_NAME).getText();
+            if (currentName.equals(itemName)) {
+                return container.findElement(ANY_BUTTON).getText();
+            }
+        }
+        throw new NoSuchElementException("Товар с названием '" + itemName + "' не найден на странице!");
+    }
+
     @Step("Клик по кнопке со значком корзины/переход на страницу корзины")
-    public void goToCart() {
+    public CartPage goToCart() {
         driver.findElement(GO_TO_CART).click();
+        return new CartPage(driver);
     }
 }

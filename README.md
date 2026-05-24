@@ -7,7 +7,7 @@
 Ниже представлен перечень автоматизированных и планируемых проверок.
 
 ### 1. Авторизация (Login Page)
-- [x] **Успешный вход**: вход с валидными данными (`standard_user` / `secret_sauce`).
+- [x] **Успешный вход**: вход с валидными данными.
 - [x] **Пустой пароль**: ошибка `Epic sadface: Password is required`.
 - [x] **Пустой логин**: ошибка `Epic sadface: Username is required`.
 - [x] **Невалидные данные**: ошибка `Epic sadface: Username and password do not match any user in this service`.

@@ -21,8 +21,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithPositiveValue() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login(user, password);
         assertEquals("Products", productsPage.getTitle());
     }
 
@@ -39,8 +40,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithEmptyPassword() {
-        loginPage.open();
-        loginPage.login("standard_user", "");
+        loginPage.open()
+                .isPageOpened()
+                .login(user, "");
         assertEquals("Epic sadface: Password is required", loginPage.getErrorMessage());
     }
 
@@ -57,8 +59,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithEmptyUser() {
-        loginPage.open();
-        loginPage.login("", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login("", password);
         assertEquals("Epic sadface: Username is required", loginPage.getErrorMessage());
     }
 
@@ -75,8 +78,9 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkLoginWithNegativeValue() {
-        loginPage.open();
-        loginPage.login("test", "test");
+        loginPage.open()
+                .isPageOpened()
+                .login("test", "test");
         assertEquals("Epic sadface: Username and password do not match any user in this service",
                 loginPage.getErrorMessage());
     }
@@ -97,16 +101,17 @@ public class LoginTest extends BaseTest {
     @Issue("Jira")
     @Owner("Egorov.OI")
     public void checkNegativeLoginDP(String user, String password, String expectedError) {
-        loginPage.open();
-        loginPage.login(user, password);
+        loginPage.open()
+                .isPageOpened()
+                .login(user, password);
         assertEquals(expectedError, loginPage.getErrorMessage());
     }
 
     @DataProvider(name = "negativeRegressLoginData")
     public Object[][] negativeData() {
         return new Object[][]{
-                {"standard_user", "", "Epic sadface: Password is required"},
-                {"", "secret_sauce", "Epic sadface: Username is required"},
+                {user, "", "Epic sadface: Password is required"},
+                {"", password, "Epic sadface: Username is required"},
                 {"test", "test", "Epic sadface: Username and password do not match any user in this service"}
         };
     }

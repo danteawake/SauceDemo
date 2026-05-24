@@ -8,7 +8,7 @@ public class LocatorTest extends BaseTest {
     @Test
     public void checkLocator() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
 
         //Практика
         // id
